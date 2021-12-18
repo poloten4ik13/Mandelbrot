@@ -1,0 +1,9 @@
+body {
+
+}
+.conteiner {
+    display: grid;
+
+justify-content: center;
+    margin-top: 70px;
+}
