@@ -2,10 +2,15 @@ import {useEffect, useRef} from "react";
 import {ColorPalette} from "./Color";
 import {Constant} from './Constant';
 import {Mandelbrot} from "./Math";
+import './Canvas.css';
 
-const Canvas = ({width, height}) => {
+const height = Constant.height;
+const width = Constant.width;
+
+
+
+const Canvas = () => {
     const canvasRef = useRef();
-
     useEffect(() => {
         const canvas = canvasRef.current
        let  context = canvas.getContext('2d')
@@ -44,7 +49,7 @@ const Canvas = ({width, height}) => {
     }
 
     return (
-        <div className='conteiner'>
+        <div className='container'>
             <canvas  ref={canvasRef} onClick={zoomHandler} width={width} height={height} />
         </div>
     )
