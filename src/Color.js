@@ -10,9 +10,9 @@ const makeRGB = (r, g, b, k) => {
 }
 
 const palette = (size = 250) => {
-    const range = parseInt(size / 6)
-    const colors = []
-    let c
+    const range = Math.floor(size / 6);
+    const colors = [];
+    let c;
     for (let k = 0; k < size; k++) {
         if (k <= range)//red to yellow
             c = makeRGB(255, [[0, 0], [range, 255]], 0, k)
