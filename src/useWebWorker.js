@@ -2,7 +2,8 @@ import {useState} from "react";
 
 const workerHandler = (fn) => {
     onmessage = (event) => {
-        postMessage(fn(...event.data));
+       const props = event.data
+        postMessage(fn(props[0],props[1],props[2],props[3],props[4]));
 
     }
 };
