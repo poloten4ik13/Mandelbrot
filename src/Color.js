@@ -7,7 +7,7 @@ const makeRGB = (r, g, b, k) => {
     if (isNaN(b)) b = calculate(b)
 
     return [r, g, b]
-}
+};
 
 const palette = (size = 250) => {
     const range = Math.floor(size / 6);

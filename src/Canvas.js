@@ -1,16 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {ColorPalette} from "./Color";
 import {Constant} from './Constant';
 import './Canvas.css';
 import useWebWorker from "./useWebWorker";
 import {Calculation} from "./Calculation";
+import MyVerticallyCenteredModal from "./Modal";
 
 const Canvas = () => {
     const height = Constant.height;
     const width = Constant.width;
     const canvasRef = useRef();
     const {result, run} = useWebWorker(Calculation);
+    const [modalShow, setModalShow] = useState(false);
+    const [loadShow, setShowLoad] = useState(false);
 
     const draw = (arr) => {
         let iterTool = 0;
@@ -22,22 +25,34 @@ const Canvas = () => {
                 canvasRef.current.getContext('2d').fillRect(i, j, 1, 1)
             }
         }
+      setShowLoad(true)
+    };
+
+    useEffect(() => {
+        run(width, height, Constant.realSetNum, Constant.imagSetNum, Constant.iteration);
+        setModalShow(true);
+
+    }, []);
+
+    const load = () => {
+        return (
+            <div className="load">
+                Loading...
+            </div>
+        )
     }
 
     useEffect(() => {
-        run(width, height, Constant.realSetNum, Constant.imagSetNum, Constant.iteration)
-    }, [])
-
-    useEffect(() => {
-        (async () => {
+      (async () => {
             const arrNum = await result
             if (arrNum !== null) {
                 draw(arrNum)
             }
-        })();
+        })()
     }, [result]);
 
     const [click, setClick] = useState(0);
+
     const zoomHandler = (e) => {
         setClick(1);
         let zfw, zfh;
@@ -58,11 +73,24 @@ const Canvas = () => {
         }
         run(width, height, Constant.realSetNum, Constant.imagSetNum, Constant.iteration);
         draw(result)
-    }
+    };
+
+const resetHandler = () => {
+    run(width, height, { start: -2, end: 1 }, {start: -1, end: 1 }, Constant.iteration);
+    draw(result)
+}
 
     return (
-        <div className='container'>
-            <canvas ref={canvasRef} onClick={zoomHandler} width={width} height={height}/>
+        <div className="main">
+            <MyVerticallyCenteredModal
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+            />
+            <div className='container'>
+                <button className="resetButton" onClick={resetHandler}>Reset</button>
+                <canvas ref={canvasRef} onClick={zoomHandler} width={width} height={height}/>
+                {loadShow ? null : load()}
+            </div>
         </div>
     )
 };

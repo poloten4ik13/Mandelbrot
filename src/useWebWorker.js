@@ -5,7 +5,7 @@ const workerHandler = (fn) => {
         postMessage(fn(...event.data));
 
     }
-}
+};
 
 const useWebWorker = (fn) => {
     const [result, setResult] = useState(null);

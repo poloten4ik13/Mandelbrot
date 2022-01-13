@@ -7,7 +7,7 @@ export const Constant = {
  "zoomFactor": 0.1,
  'width':1400,
  'height': 700
-}
+};
 
 
 

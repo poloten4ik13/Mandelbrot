@@ -1,6 +1,22 @@
-
+body {
+    background-color: black !important;
+}
 .container {
     display: grid;
     justify-content: center;
     margin-top: 100px;
+    cursor: pointer;
+    align-self: center;
+}
+.load {
+    color: white;
+    font-size: 94px;
+    position: absolute;
+    display: grid;
+    justify-content: center;
+    align-self: center;
+    margin-right: 500px;
+}
+.main {
+
 }
