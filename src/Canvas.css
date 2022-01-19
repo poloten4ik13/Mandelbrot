@@ -4,10 +4,11 @@ body {
 .container {
     display: grid;
     justify-content: center;
-    margin-top: 100px;
     cursor: pointer;
     align-self: center;
+    border: white solid 2px;
 }
+
 .load {
     color: white;
     font-size: 94px;
@@ -15,8 +16,11 @@ body {
     display: grid;
     justify-content: center;
     align-self: center;
-    margin-right: 500px;
-}
-.main {
 
+}
+@media only screen and (orientation:portrait) {
+    body {
+        height: 100vw;
+        transform: rotate(90deg);
+    }
 }

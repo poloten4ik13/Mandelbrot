@@ -8,12 +8,29 @@ import {Calculation} from "./Calculation";
 import MyVerticallyCenteredModal from "./Modal";
 
 const Canvas = () => {
-    const height = Constant.height;
-    const width = Constant.width;
+    const [width, setWidth] = useState();
+    const [height, setHeight] = useState();
+
+    const funcLock = () => {
+        window.screen.orientation.lock('landscape');
+    }
+    useEffect(() => {
+        funcLock()
+        setWidth(Math.floor(window.innerWidth * 0.90));
+       setHeight(Math.floor(window.innerHeight* 0.90));
+    }, []);
+    console.log(width,height)
     const canvasRef = useRef();
     const {result, run} = useWebWorker(Calculation);
     const [modalShow, setModalShow] = useState(false);
     const [loadShow, setShowLoad] = useState(false);
+
+
+    useEffect(() => {
+        run(Math.floor(window.innerWidth * 0.90), Math.floor(window.innerHeight* 0.90), Constant.realSetNum, Constant.imagSetNum, Constant.iteration);
+        setModalShow(true);
+    }, []);
+
 
     const draw = (arr) => {
         let iterTool = 0;
@@ -22,17 +39,13 @@ const Canvas = () => {
                 const [m, isMandelbrotSet] = arr[iterTool++];
                 let c = isMandelbrotSet ? [0, 0, 0] : ColorPalette[m % (ColorPalette.length - 1)];
                 canvasRef.current.getContext('2d').fillStyle = `rgb(${c[0]}, ${c[1]}, ${c[2]})`;
-                canvasRef.current.getContext('2d').fillRect(i, j, 1, 1)
+                canvasRef.current.getContext('2d').fillRect(i, j, 1, 1);
             }
         }
       setShowLoad(true)
     };
 
-    useEffect(() => {
-        run(width, height, Constant.realSetNum, Constant.imagSetNum, Constant.iteration);
-        setModalShow(true);
 
-    }, []);
 
     const load = () => {
         return (
@@ -76,7 +89,9 @@ const Canvas = () => {
     };
 
 const resetHandler = () => {
-    run(width, height, { start: -2, end: 1 }, {start: -1, end: 1 }, Constant.iteration);
+    Constant.realSetNum = { start: -2, end: 1 };
+    Constant.imagSetNum = { start: -1, end: 1 };
+    run(width, height, Constant.realSetNum, Constant.imagSetNum, Constant.iteration);
     draw(result)
 }
 
@@ -88,7 +103,7 @@ const resetHandler = () => {
             />
             <div className='container'>
                 <button className="resetButton" onClick={resetHandler}>Reset</button>
-                <canvas ref={canvasRef} onClick={zoomHandler} width={width} height={height}/>
+                <canvas  ref={canvasRef} onClick={zoomHandler} width={width} height={height}/>
                 {loadShow ? null : load()}
             </div>
         </div>
