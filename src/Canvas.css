@@ -6,21 +6,15 @@ body {
     justify-content: center;
     cursor: pointer;
     align-self: center;
-    border: white solid 2px;
+    margin-top: Calc(100% - 98.5%);
 }
 
 .load {
     color: white;
     font-size: 94px;
-    position: absolute;
+    position: relative;
     display: grid;
     justify-content: center;
     align-self: center;
-
-}
-@media only screen and (orientation:portrait) {
-    body {
-        height: 100vw;
-        transform: rotate(90deg);
-    }
+    margin-top: -900px;
 }

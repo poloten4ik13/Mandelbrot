@@ -11,15 +11,11 @@ const Canvas = () => {
     const [width, setWidth] = useState();
     const [height, setHeight] = useState();
 
-    const funcLock = () => {
-        window.screen.orientation.lock('landscape');
-    }
     useEffect(() => {
-        funcLock()
         setWidth(Math.floor(window.innerWidth * 0.90));
-       setHeight(Math.floor(window.innerHeight* 0.90));
+        setHeight(Math.floor(window.innerHeight * 0.90));
     }, []);
-    console.log(width,height)
+
     const canvasRef = useRef();
     const {result, run} = useWebWorker(Calculation);
     const [modalShow, setModalShow] = useState(false);
